@@ -10,7 +10,7 @@
 $lang = 'en';
 
 // Auth with login/password (set true/false to enable/disable it)
-$use_auth = false;//true;
+$use_auth = true;
 
 // Users: array('Username' => 'Password', 'Username2' => 'Password2', ...), Password has to be encrypted into MD5
 $auth_users = array(
