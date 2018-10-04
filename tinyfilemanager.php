@@ -10,7 +10,7 @@
 $lang = 'en';
 
 // Auth with login/password (set true/false to enable/disable it)
-$use_auth = true;
+$use_auth = false;//true;
 
 // Users: array('Username' => 'Password', 'Username2' => 'Password2', ...), Password has to be encrypted into MD5
 $auth_users = array(
@@ -38,6 +38,9 @@ $highlightjs_style = 'vs';
 
 // Enable ace.js (https://ace.c9.io/) on view's page
 $edit_files = true;
+
+// Filter by time
+$time_filter = isset($_GET['older_than']) ? ('-' . urldecode($_GET['older_than'])) : null;
 
 // Send files though mail
 $send_mail = false;
@@ -686,6 +689,9 @@ if (is_array($objects)) {
             continue;
         }
         $new_path = $path . '/' . $file;
+        if(!is_null($time_filter) && strtotime($time_filter) < filemtime($new_path)) {
+            continue;
+        }
         if (is_file($new_path)) {
             $files[] = $file;
         } elseif (is_dir($new_path) && $file != '.' && $file != '..' && !in_array($file, $GLOBALS['exclude_folders'])) {
