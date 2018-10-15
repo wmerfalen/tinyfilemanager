@@ -42,6 +42,9 @@ $edit_files = true;
 // Filter by time
 $time_filter = isset($_GET['older_than']) ? ('-' . urldecode($_GET['older_than'])) : null;
 
+// Only directories
+$only_directories = isset($_GET['dir_only']) ? (bool)$_GET['dir_only'] : false;
+
 // Send files though mail
 $send_mail = false;
 
@@ -692,7 +695,7 @@ if (is_array($objects)) {
         if(!is_null($time_filter) && strtotime($time_filter) < filemtime($new_path)) {
             continue;
         }
-        if (is_file($new_path)) {
+        if (is_file($new_path) && !$only_directories) {
             $files[] = $file;
         } elseif (is_dir($new_path) && $file != '.' && $file != '..' && !in_array($file, $GLOBALS['exclude_folders'])) {
             $folders[] = $file;
